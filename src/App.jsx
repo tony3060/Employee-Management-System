@@ -10,7 +10,7 @@ import { setLocalStorage, getLocalStorage } from "./utils/localStorage";
 const App = () => {
   const [user, setUser] = useState("");
   const [loggedInUserData, setLoggedInUserData] = useState(null)
-  let authData = useContext(AuthContext);
+  const [userdata,setUserdata] = useContext(AuthContext);
 
  useEffect(() => {
    let loggedInUser = localStorage.getItem('loggedInUser');
@@ -20,8 +20,6 @@ const App = () => {
         setLoggedInUserData(userData);
       console.log(userData);
     }
- 
-   
  },[])
  
   
@@ -32,13 +30,13 @@ const App = () => {
         localStorage.setItem('loggedInUser', JSON.stringify({role : 'admin'}));
         //  console.log("Admin")
       }
-      else if(authData){
-        let employee = authData.employees.find((e) => email === e.email && password === e.password);
+      else if(userdata){
+        let employee = userdata.find((e) => email === e.email && password === e.password);
         if(employee){
           setUser('employee');
           setLoggedInUserData(employee)
           localStorage.setItem("loggedInUser", JSON.stringify({role : 'employee', data : employee}));
-           console.log("Employee")
+          //  console.log("Employee")
         } else{
           alert("Invalid Credentials");
         }
